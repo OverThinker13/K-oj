@@ -1,7 +1,0 @@
-cn\overthinker\system\test\service\Impl\TestServiceImpl.class
-cn\overthinker\system\domain\SysUser.class
-cn\overthinker\system\test\domain\TestDomain.class
-cn\overthinker\system\OjSystemApplication.class
-cn\overthinker\system\test\controller\TestController.class
-cn\overthinker\system\test\mapper\TestMapper.class
-cn\overthinker\system\test\service\TestService.class
