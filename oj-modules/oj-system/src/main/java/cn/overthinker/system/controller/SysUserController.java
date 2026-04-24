@@ -2,6 +2,7 @@ package cn.overthinker.system.controller;
 
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.system.domain.LoginDTO;
+import cn.overthinker.system.domain.SysUser;
 import cn.overthinker.system.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,13 @@ public class SysUserController {
         return sysUserService.login(loginDTO.getUserAccount(),loginDTO.getPassword());
     }
 
+    // 管理员的增删改查
+
+
+
+    // 新增
+    @PostMapping("/add")
+    public  add(@RequestBody ){
+
+    }
 }
