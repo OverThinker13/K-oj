@@ -1,5 +1,7 @@
 package cn.overthinker.system.test.controller;
 
+import cn.overthinker.common.core.domain.R;
+import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.system.test.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +26,14 @@ public class TestController {
     @PostMapping("/add")
     public String add(){
         return testService.add();
+    }
+
+    @GetMapping("apifoxtest")
+    public R<String> apifoxtest(String apiId){
+        R<String> r = new R<>();
+        r.setCode(ResultCode.SUCCESS.getCode());
+        r.setMsg(ResultCode.SUCCESS.getMsg());
+        r.setData("apifoxtest:" + apiId);
+        return r;
     }
 }
