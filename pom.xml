@@ -18,6 +18,7 @@
         <module>oj-modules</module>
         <module>oj-common</module>
         <module>oj-common/oj-common-core</module>
+        <module>oj-getaway</module>
     </modules>
 
     <properties>
