@@ -20,11 +20,11 @@ public class SysUserServiceImpl implements SysUserService {
     // 需要考虑维护性、性能、安全
     public R<Void> login(String userAccount, String password) {
 
+
         SysUser sysUser = sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .select(SysUser::getPassword)
                 .eq(SysUser::getUserAccount, userAccount));
 
-//        R loginResult = new R();
 
         if (sysUser == null) {
 //            loginResult.setCode(ResultCode.FAILED_USER_NOT_EXISTS.getCode());
@@ -34,7 +34,6 @@ public class SysUserServiceImpl implements SysUserService {
         if (BCryptUtils.matchesPassword(password, sysUser.getPassword())) {
 //            loginResult.setCode(ResultCode.SUCCESS.getCode());
 //            loginResult.setMsg(ResultCode.SUCCESS.getMsg());
-            int a = 10/0;
             return R.ok();
         }
 //        loginResult.setCode(ResultCode.FAILED_LOGIN.getCode());
