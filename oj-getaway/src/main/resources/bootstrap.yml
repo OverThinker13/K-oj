@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: oj-getaway
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: 1f98d406-c28a-46bf-9e1a-c11338e1cf39
+      config:
+        server-addr: localhost:8848
+        namespace: 1f98d406-c28a-46bf-9e1a-c11338e1cf39
+        file-extension: yaml
