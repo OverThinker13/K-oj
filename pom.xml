@@ -28,8 +28,10 @@
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <fastjson.version>2.0.43</fastjson.version>
         <oj-common-core.version>1.0-SNAPSHOT</oj-common-core.version>
         <oj-common-swagger.version>1.0-SNAPSHOT</oj-common-swagger.version>
+        <oj-common-redis.version>1.0-SNAPSHOT</oj-common-redis.version>
         <oj-common-security.version>1.0-SNAPSHOT</oj-common-security.version>
         <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
     </properties>
@@ -40,7 +42,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-        
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>

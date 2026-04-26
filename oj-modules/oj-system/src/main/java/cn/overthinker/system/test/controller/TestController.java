@@ -2,6 +2,8 @@ package cn.overthinker.system.test.controller;
 
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;
+import cn.overthinker.common.redis.service.RedisService;
+import cn.overthinker.system.domain.SysUser;
 import cn.overthinker.system.test.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class TestController {
     @Autowired
     private TestService testService;
 
+    @Autowired
+    private RedisService redisService;
+
     // /test/list 查询tb_test的数据
     @GetMapping("/list")
     public List<?> list() {
@@ -28,6 +33,15 @@ public class TestController {
     @PostMapping("/add")
     public String add() {
         return testService.add();
+    }
+
+    @GetMapping("/redisAddAndGet")
+    public String redisAddAndGet() {
+        SysUser sysUser = new SysUser();
+        sysUser.setUserAccount("redisTest");
+        redisService.setCacheObject("u", sysUser);
+        SysUser u = redisService.getCacheObject("u", SysUser.class);
+        return u.toString();
     }
 
     @GetMapping("apifoxtest")
@@ -45,4 +59,6 @@ public class TestController {
         log.error("我是error级别日志");
         return "log测试";
     }
+
+
 }
