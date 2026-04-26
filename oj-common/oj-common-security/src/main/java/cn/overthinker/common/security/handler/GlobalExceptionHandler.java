@@ -1,4 +1,4 @@
-package cn.overthinker.common.security;
+package cn.overthinker.common.security.handler;
 
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;

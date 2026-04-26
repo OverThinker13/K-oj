@@ -2,27 +2,40 @@ package cn.overthinker.system.service.Impl;
 
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;
+import cn.overthinker.common.core.enums.UserIdentity;
+import cn.overthinker.common.security.service.TokenService;
 import cn.overthinker.system.domain.SysUser;
 import cn.overthinker.system.mapper.SysUserMapper;
 import cn.overthinker.system.service.SysUserService;
 import cn.overthinker.system.utils.BCryptUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 @Service
+@RefreshScope
 public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    // 从配置中读取secret信息（配置在Nacos统一管理）
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Autowired
+    private TokenService tokenService;
+
+
     @Override
     // 需要考虑维护性、性能、安全
-    public R<Void> login(String userAccount, String password) {
+    public R<String> login(String userAccount, String password) {
 
 
         SysUser sysUser = sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>()
-                .select(SysUser::getPassword)
+                .select(SysUser::getUserId, SysUser::getPassword)
                 .eq(SysUser::getUserAccount, userAccount));
 
 
@@ -34,7 +47,8 @@ public class SysUserServiceImpl implements SysUserService {
         if (BCryptUtils.matchesPassword(password, sysUser.getPassword())) {
 //            loginResult.setCode(ResultCode.SUCCESS.getCode());
 //            loginResult.setMsg(ResultCode.SUCCESS.getMsg());
-            return R.ok();
+            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue());
+            return R.ok(token);
         }
 //        loginResult.setCode(ResultCode.FAILED_LOGIN.getCode());
 //        loginResult.setMsg(ResultCode.FAILED_LOGIN.getMsg());
