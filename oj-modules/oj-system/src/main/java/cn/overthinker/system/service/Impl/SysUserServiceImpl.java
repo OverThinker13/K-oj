@@ -5,6 +5,7 @@ import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.core.enums.UserIdentity;
 import cn.overthinker.common.security.service.TokenService;
 import cn.overthinker.system.domain.SysUser;
+import cn.overthinker.system.domain.SysUserSaveDTO;
 import cn.overthinker.system.mapper.SysUserMapper;
 import cn.overthinker.system.service.SysUserService;
 import cn.overthinker.system.utils.BCryptUtils;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RefreshScope
@@ -58,5 +61,17 @@ public class SysUserServiceImpl implements SysUserService {
 
         // 全局异常处理，日志框架
         //  1.增加全局异常处理  2. 当捕获异常时。记录相关日志，作为问题排查线索
+    }
+
+    @Override
+    public int add(SysUserSaveDTO sysUserSaveDTO) {
+        //将DTO转为实体
+        SysUser sysUser = new SysUser();
+        sysUser.setUserAccount(sysUserSaveDTO.getUserAccount());
+        sysUser.setPassword(BCryptUtils.encryptPassword(sysUserSaveDTO.getPassword()));
+        sysUser.setCreateBy(100L);   //创建人  获取当前用户id  如何获取当前调用接口的用户id呢
+        sysUser.setCreateTime(LocalDateTime.now());
+        return sysUserMapper.insert(sysUser);
+
     }
 }

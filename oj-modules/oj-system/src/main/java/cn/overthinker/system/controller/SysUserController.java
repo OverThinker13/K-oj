@@ -1,5 +1,6 @@
 package cn.overthinker.system.controller;
 
+import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.system.domain.LoginDTO;
 import cn.overthinker.system.domain.SysUserSaveDTO;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/sysUser")
 @Tag(name = "管理员接口")
-public class SysUserController {
+public class SysUserController extends BaseController {
 
     @Autowired
     private SysUserService sysUserService;
@@ -57,7 +58,7 @@ public class SysUserController {
     @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
     @ApiResponse(responseCode = "3101", description = "用户已存在")
     public R<Void> add(@RequestBody SysUserSaveDTO sysUserSaveDTO) {
-        return null;
+        return toR(sysUserService.add(sysUserSaveDTO));
     }
 
     /**

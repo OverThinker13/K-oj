@@ -1,2 +1,4 @@
 cn.overthinker.common.security.handler.GlobalExceptionHandler
 cn.overthinker.common.security.service.TokenService
+cn.overthinker.common.security.interceptor.TokenInterceptor
+cn.overthinker.common.security.config.WebMvcConfig

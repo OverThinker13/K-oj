@@ -55,6 +55,18 @@ public class RedisService {
     }
 
     /**
+     * 获取剩余有效时间，返回确定时间单位
+     *
+     * @param key
+     * @param unit
+     * @return
+     */
+    public Long getExpire(final String key, final TimeUnit unit) {
+        return redisTemplate.getExpire(key, unit);
+    }
+
+
+    /**
      * 删除单个对象
      *
      * @param key
