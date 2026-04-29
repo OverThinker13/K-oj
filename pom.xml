@@ -15,7 +15,7 @@
     <artifactId>K-oj</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    
+
     <modules>
         <module>oj-modules</module>
         <module>oj-common</module>
@@ -36,6 +36,7 @@
         <oj-common-swagger.version>1.0-SNAPSHOT</oj-common-swagger.version>
         <oj-common-redis.version>1.0-SNAPSHOT</oj-common-redis.version>
         <oj-common-security.version>1.0-SNAPSHOT</oj-common-security.version>
+        <oj-common-mybatis.version>1.0-SNAPSHOT</oj-common-mybatis.version>
         <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
     </properties>
 

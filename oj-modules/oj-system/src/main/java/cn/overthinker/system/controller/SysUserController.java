@@ -2,9 +2,9 @@ package cn.overthinker.system.controller;
 
 import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
-import cn.overthinker.system.domain.LoginDTO;
-import cn.overthinker.system.domain.SysUserSaveDTO;
-import cn.overthinker.system.domain.SysUserVO;
+import cn.overthinker.system.domain.dto.LoginDTO;
+import cn.overthinker.system.domain.dto.SysUserSaveDTO;
+import cn.overthinker.system.domain.vo.SysUserVO;
 import cn.overthinker.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

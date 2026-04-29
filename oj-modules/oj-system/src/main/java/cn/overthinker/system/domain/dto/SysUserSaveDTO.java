@@ -1,8 +1,9 @@
-package cn.overthinker.system.domain;
+package cn.overthinker.system.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+// 参数合法性
 @Data
 public class SysUserSaveDTO {
     @Schema(description = "用户账户")

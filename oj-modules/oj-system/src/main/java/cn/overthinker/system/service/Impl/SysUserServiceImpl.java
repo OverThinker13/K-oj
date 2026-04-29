@@ -1,11 +1,13 @@
 package cn.overthinker.system.service.Impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.core.enums.UserIdentity;
+import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.common.security.service.TokenService;
 import cn.overthinker.system.domain.SysUser;
-import cn.overthinker.system.domain.SysUserSaveDTO;
+import cn.overthinker.system.domain.dto.SysUserSaveDTO;
 import cn.overthinker.system.mapper.SysUserMapper;
 import cn.overthinker.system.service.SysUserService;
 import cn.overthinker.system.utils.BCryptUtils;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RefreshScope
@@ -65,13 +67,27 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public int add(SysUserSaveDTO sysUserSaveDTO) {
+//        checkParams(sysUserSaveDTO);
         //将DTO转为实体
+        List<SysUser> sysUserList = sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getUserAccount, sysUserSaveDTO.getUserAccount()));
+        // 如果不为空返回true，说明用户已经存在，我们需要返回错误
+        if (CollectionUtil.isNotEmpty(sysUserList)) {
+            // 提供自定义异常 是个公共异常
+            throw new ServiceException(ResultCode.AILED_USER_EXISTS);
+        }
         SysUser sysUser = new SysUser();
         sysUser.setUserAccount(sysUserSaveDTO.getUserAccount());
         sysUser.setPassword(BCryptUtils.encryptPassword(sysUserSaveDTO.getPassword()));
-        sysUser.setCreateBy(100L);   //创建人  获取当前用户id  如何获取当前调用接口的用户id呢
-        sysUser.setCreateTime(LocalDateTime.now());
         return sysUserMapper.insert(sysUser);
 
     }
+
+//    private void checkParams(SysUserSaveDTO sysUserSaveDTO) {
+//        String password = sysUserSaveDTO.getPassword();
+//        if (password == null) {
+//            throw new ServiceException();
+//        }
+//    }
+
 }

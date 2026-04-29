@@ -16,9 +16,5 @@ public class SysUser extends BaseEntity {
     private Long userId;  // 主键 不再使用auto——increment
     private String userAccount;
     private String password;
-    private Long createBy;
-    private Long updateBy;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
-
+    
 }

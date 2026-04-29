@@ -1,7 +1,7 @@
 package cn.overthinker.system.service;
 
 import cn.overthinker.common.core.domain.R;
-import cn.overthinker.system.domain.SysUserSaveDTO;
+import cn.overthinker.system.domain.dto.SysUserSaveDTO;
 
 public interface SysUserService {
     R<String> login(String userAccount, String password);

@@ -1,4 +1,4 @@
-package cn.overthinker.system.domain;
+package cn.overthinker.system.domain.dto;
 
 import lombok.Data;
 

@@ -4,9 +4,11 @@ import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.redis.service.RedisService;
 import cn.overthinker.system.domain.SysUser;
+import cn.overthinker.system.test.domain.dto.ValidationDTO;
 import cn.overthinker.system.test.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,5 +62,9 @@ public class TestController {
         return "log测试";
     }
 
+    @GetMapping("/validation")
+    public String validation(@Validated ValidationDTO validatorDTO) {
+        return "参数测试";
+    }
 
 }
