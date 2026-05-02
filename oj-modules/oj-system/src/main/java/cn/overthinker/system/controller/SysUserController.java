@@ -1,7 +1,10 @@
 package cn.overthinker.system.controller;
 
 import cn.overthinker.common.core.controller.BaseController;
+import cn.overthinker.common.core.domain.LoginUser;
 import cn.overthinker.common.core.domain.R;
+import cn.overthinker.common.core.domain.vo.LoginUserVO;
+import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.system.domain.dto.LoginDTO;
 import cn.overthinker.system.domain.dto.SysUserSaveDTO;
 import cn.overthinker.system.domain.vo.SysUserVO;
@@ -15,6 +18,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static cn.overthinker.common.core.constants.HttpConstants.AUTHENTICATION;
 
 /**
  * 系统管理员控制器
@@ -45,6 +50,20 @@ public class SysUserController extends BaseController {
     public R<String> login(@RequestBody LoginDTO loginDTO) {
         return sysUserService.login(loginDTO.getUserAccount(), loginDTO.getPassword());
     }
+
+
+    /**
+     * 获取用户当前信息
+     *
+     * @param token
+     * @return
+     */
+    //接口地址：/system/sysUser/info
+    @GetMapping("/info")
+    public R<LoginUserVO> info(@RequestHeader(AUTHENTICATION) String token) {
+        return sysUserService.info(token);
+    }
+
 
     /**
      * 新增管理员

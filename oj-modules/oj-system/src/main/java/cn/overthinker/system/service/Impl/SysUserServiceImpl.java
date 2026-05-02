@@ -1,7 +1,9 @@
 package cn.overthinker.system.service.Impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.overthinker.common.core.domain.LoginUser;
 import cn.overthinker.common.core.domain.R;
+import cn.overthinker.common.core.domain.vo.LoginUserVO;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.core.enums.UserIdentity;
 import cn.overthinker.common.security.exception.ServiceException;
@@ -40,7 +42,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 
         SysUser sysUser = sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>()
-                .select(SysUser::getUserId, SysUser::getPassword)
+                .select(SysUser::getUserId, SysUser::getPassword, SysUser::getNickName)
                 .eq(SysUser::getUserAccount, userAccount));
 
 
@@ -52,7 +54,7 @@ public class SysUserServiceImpl implements SysUserService {
         if (BCryptUtils.matchesPassword(password, sysUser.getPassword())) {
 //            loginResult.setCode(ResultCode.SUCCESS.getCode());
 //            loginResult.setMsg(ResultCode.SUCCESS.getMsg());
-            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue());
+            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue(), sysUser.getNickName());
             return R.ok(token);
         }
 //        loginResult.setCode(ResultCode.FAILED_LOGIN.getCode());
@@ -82,6 +84,18 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserMapper.insert(sysUser);
 
     }
+
+    @Override
+    public R<LoginUserVO> info(String token) {
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) {
+            return R.fail();
+        }
+        LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setNickName(loginUser.getNickName());
+        return R.ok(loginUserVO);
+    }
+
 
 //    private void checkParams(SysUserSaveDTO sysUserSaveDTO) {
 //        String password = sysUserSaveDTO.getPassword();

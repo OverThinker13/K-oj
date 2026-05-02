@@ -50,31 +50,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
         AuthFilter authFilter = new AuthFilter();
         String pattern = "/sys/bc";
         System.out.println(authFilter.isMatch(pattern, "/sys/bc"));
-
-        // 测试 ?
-//        String pattern = "/sys/?bc";
-//        System.out.println(authFilter.isMatch(pattern, "/sys/abc"));
-//        System.out.println(authFilter.isMatch(pattern, "/sys/cbc"));
-//        System.out.println(authFilter.isMatch(pattern, "/sys/acbc"));
-//        System.out.println(authFilter.isMatch(pattern, "/sdsa/abc"));
-//        System.out.println(authFilter.isMatch(pattern, "/sys/abcw"));
-
-        // 测试*
-        // String pattern = "/sys/*/bc";
-        // System.out.println(authFilter.isMatch(pattern,"/sys/a/bc"));
-        // System.out.println(authFilter.isMatch(pattern,"/sys/sdasdsadsad/bc"));
-        // System.out.println(authFilter.isMatch(pattern,"/sys/a/b/bc"));
-        // System.out.println(authFilter.isMatch(pattern,"/a/b/bc"));
-        // System.out.println(authFilter.isMatch(pattern,"/sys/a/b/"));
-
-        // 测试**
-        // String pattern = "/sys/**/bc";
-        // System.out.println(authFilter.isMatch(pattern, "/sys/a/bc"));
-        // System.out.println(authFilter.isMatch(pattern, "/sys/sdasdsadsad/bc"));
-        // System.out.println(authFilter.isMatch(pattern, "/sys/a/b/bc"));
-        // System.out.println(authFilter.isMatch(pattern, "/sys/a/b/s/23/432/fdsf///bc"));
-        // System.out.println(authFilter.isMatch(pattern, "/a/b/s/23/432/fdsf///bc"));
-        // System.out.println(authFilter.isMatch(pattern, "/sys/a/b/s/23/432/fdsf///"));
     }
 
     @Override

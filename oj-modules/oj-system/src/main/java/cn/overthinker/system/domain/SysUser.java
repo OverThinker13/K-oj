@@ -16,5 +16,6 @@ public class SysUser extends BaseEntity {
     private Long userId;  // 主键 不再使用auto——increment
     private String userAccount;
     private String password;
-    
+    private String nickName;
+
 }
