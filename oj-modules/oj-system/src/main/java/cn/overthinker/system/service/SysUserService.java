@@ -7,7 +7,11 @@ import cn.overthinker.system.domain.dto.SysUserSaveDTO;
 public interface SysUserService {
     R<String> login(String userAccount, String password);
 
-    int add(SysUserSaveDTO sysUserSaveDTO);
+    boolean logout(String token);
 
     R<LoginUserVO> info(String token);
+
+    int add(SysUserSaveDTO sysUserSaveDTO);
+
+
 }

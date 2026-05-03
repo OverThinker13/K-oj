@@ -34,6 +34,7 @@ public class SysUserController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
 
+
     /**
      * 管理员登录
      * 验证账号密码，成功返回 token，失败返回对应错误码
@@ -51,6 +52,18 @@ public class SysUserController extends BaseController {
         return sysUserService.login(loginDTO.getUserAccount(), loginDTO.getPassword());
     }
 
+    /**
+     * 退出登录操作
+     *
+     * @param token
+     * @return
+     */
+    // 接口地址：/system/sysUser/logout
+    @DeleteMapping("/logout")
+    public R<Void> logout(@RequestHeader(AUTHENTICATION) String token) {
+        boolean logout = sysUserService.logout(token);
+        return toR(logout);
+    }
 
     /**
      * 获取用户当前信息
@@ -60,10 +73,10 @@ public class SysUserController extends BaseController {
      */
     //接口地址：/system/sysUser/info
     @GetMapping("/info")
+    // @RequestHeader(AUTHENTICATION)就是从请求头里，把名为 Authentication 的值取出来，赋值给 token 变量
     public R<LoginUserVO> info(@RequestHeader(AUTHENTICATION) String token) {
         return sysUserService.info(token);
     }
-
 
     /**
      * 新增管理员

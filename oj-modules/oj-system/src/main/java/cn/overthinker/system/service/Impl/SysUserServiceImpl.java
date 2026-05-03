@@ -1,6 +1,8 @@
 package cn.overthinker.system.service.Impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.overthinker.common.core.constants.HttpConstants;
 import cn.overthinker.common.core.domain.LoginUser;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.domain.vo.LoginUserVO;
@@ -68,8 +70,36 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    public boolean logout(String token) {
+        // 去除token中Bearer前缀
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        return tokenService.deleteLoginUser(token, secret);
+
+    }
+
+    @Override
+    public R<LoginUserVO> info(String token) {
+
+        // 去除token中Bearer前缀
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) {
+            return R.fail();
+        }
+        LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setNickName(loginUser.getNickName());
+        return R.ok(loginUserVO);
+    }
+
+
+    @Override
     public int add(SysUserSaveDTO sysUserSaveDTO) {
-//        checkParams(sysUserSaveDTO);
+//      checkParams(sysUserSaveDTO);
         //将DTO转为实体
         List<SysUser> sysUserList = sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUserAccount, sysUserSaveDTO.getUserAccount()));
@@ -84,18 +114,6 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserMapper.insert(sysUser);
 
     }
-
-    @Override
-    public R<LoginUserVO> info(String token) {
-        LoginUser loginUser = tokenService.getLoginUser(token, secret);
-        if (loginUser == null) {
-            return R.fail();
-        }
-        LoginUserVO loginUserVO = new LoginUserVO();
-        loginUserVO.setNickName(loginUser.getNickName());
-        return R.ok(loginUserVO);
-    }
-
 
 //    private void checkParams(SysUserSaveDTO sysUserSaveDTO) {
 //        String password = sysUserSaveDTO.getPassword();
