@@ -38,6 +38,8 @@
         <oj-common-security.version>1.0-SNAPSHOT</oj-common-security.version>
         <oj-common-mybatis.version>1.0-SNAPSHOT</oj-common-mybatis.version>
         <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
+        <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
+
     </properties>
 
     <dependencies>

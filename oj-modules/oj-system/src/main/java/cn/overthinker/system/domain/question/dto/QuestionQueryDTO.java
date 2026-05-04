@@ -1,13 +1,12 @@
 package cn.overthinker.system.domain.question.dto;
 
+import cn.overthinker.common.core.domain.dto.PageQueryDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class QuestionQueryDTO {
+public class QuestionQueryDTO extends PageQueryDTO {
     private Integer difficulty;
     private String title;
-    private Integer pageSize = 10;   //每页的数据  必传
-    private Integer pageNum = 1;    //第几页     必传
 }
