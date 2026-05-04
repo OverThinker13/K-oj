@@ -1,4 +1,4 @@
-package cn.overthinker.system.service;
+package cn.overthinker.system.service.sysuser;
 
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.domain.vo.LoginUserVO;

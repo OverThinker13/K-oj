@@ -1,4 +1,4 @@
-package cn.overthinker.system.service.Impl;
+package cn.overthinker.system.service.sysuser.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
@@ -12,8 +12,8 @@ import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.common.security.service.TokenService;
 import cn.overthinker.system.domain.sysuser.SysUser;
 import cn.overthinker.system.domain.sysuser.dto.SysUserSaveDTO;
-import cn.overthinker.system.mapper.SysUserMapper;
-import cn.overthinker.system.service.SysUserService;
+import cn.overthinker.system.mapper.sysuser.SysUserMapper;
+import cn.overthinker.system.service.sysuser.SysUserService;
 import cn.overthinker.system.utils.BCryptUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

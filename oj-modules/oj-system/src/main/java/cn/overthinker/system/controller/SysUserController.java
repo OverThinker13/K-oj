@@ -6,7 +6,7 @@ import cn.overthinker.common.core.domain.vo.LoginUserVO;
 import cn.overthinker.system.domain.sysuser.dto.LoginDTO;
 import cn.overthinker.system.domain.sysuser.dto.SysUserSaveDTO;
 import cn.overthinker.system.domain.sysuser.vo.SysUserVO;
-import cn.overthinker.system.service.SysUserService;
+import cn.overthinker.system.service.sysuser.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

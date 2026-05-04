@@ -1,4 +1,4 @@
-package cn.overthinker.system.mapper;
+package cn.overthinker.system.mapper.sysuser;
 
 import cn.overthinker.system.domain.sysuser.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
