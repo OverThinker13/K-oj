@@ -3,7 +3,7 @@ package cn.overthinker.system.test.controller;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.redis.service.RedisService;
-import cn.overthinker.system.domain.SysUser;
+import cn.overthinker.system.domain.sysuser.SysUser;
 import cn.overthinker.system.test.domain.dto.ValidationDTO;
 import cn.overthinker.system.test.service.TestService;
 import lombok.extern.slf4j.Slf4j;

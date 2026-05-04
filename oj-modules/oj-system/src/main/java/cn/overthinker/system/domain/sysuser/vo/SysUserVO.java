@@ -1,4 +1,4 @@
-package cn.overthinker.system.domain.vo;
+package cn.overthinker.system.domain.sysuser.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

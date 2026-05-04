@@ -1,4 +1,4 @@
-package cn.overthinker.system.domain.dto;
+package cn.overthinker.system.domain.sysuser.dto;
 
 import lombok.Data;
 

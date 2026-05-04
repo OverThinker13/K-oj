@@ -1,12 +1,10 @@
-package cn.overthinker.system.domain;
+package cn.overthinker.system.domain.sysuser;
 
 import cn.overthinker.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @TableName("tb_sys_user")
 @Data
