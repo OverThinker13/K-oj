@@ -29,7 +29,7 @@ create table tb_question
     content       varchar(1000)   not null comment '题目内容',
     question_case varchar(1000) comment '题目用例',
     default_code  varchar(500)    not null comment '默认代码块',
-    main_fuc      varchar(500)    not null comment 'main函数',
+    main_func     varchar(500)    not null comment 'main函数',
     create_by     bigint unsigned not null comment '创建人',
     create_time   datetime        not null comment '创建时间',
     update_by     bigint unsigned comment '更新人',
