@@ -50,10 +50,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDetailVO detail(Long questionId) {
-        Question question = questionMapper.selectById(questionId);
-        if (question == null) {
-            throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
-        }
+        Question question = checkQuestionExistsById(questionId);
         QuestionDetailVO questionDetailVO = new QuestionDetailVO();
         BeanUtils.copyProperties(question, questionDetailVO);
         return questionDetailVO;
@@ -61,10 +58,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public int edit(QuestionEditDTO questionEditDTO) {
-        Question oldQuestion = questionMapper.selectById(questionEditDTO.getQuestionId());
-        if (oldQuestion == null) {
-            throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
-        }
+        Question oldQuestion = checkQuestionExistsById(questionEditDTO.getQuestionId());
+
         oldQuestion.setTitle(questionEditDTO.getTitle());
         oldQuestion.setDifficulty(questionEditDTO.getDifficulty());
         oldQuestion.setTimeLimit(questionEditDTO.getTimeLimit());
@@ -74,5 +69,20 @@ public class QuestionServiceImpl implements QuestionService {
         oldQuestion.setDefaultCode(questionEditDTO.getDefaultCode());
         oldQuestion.setMainFunc(questionEditDTO.getMainFunc());
         return questionMapper.updateById(oldQuestion);
+    }
+
+    @Override
+    public int delete(Long questionId) {
+        // 之所以要判断，是避免并发执行时，数据已经被删了
+        Question question = checkQuestionExistsById(questionId);
+        return questionMapper.deleteById(questionId);
+    }
+
+    protected Question checkQuestionExistsById(Long questionId) {
+        Question question = questionMapper.selectById(questionId);
+        if (question == null) {
+            throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        }
+        return question;
     }
 }

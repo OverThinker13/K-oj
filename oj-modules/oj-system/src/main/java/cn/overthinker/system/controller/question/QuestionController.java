@@ -45,4 +45,9 @@ public class QuestionController extends BaseController {
         return toR(questionService.edit(questionEditDTO));
     }
 
+    @DeleteMapping("/delete")
+    public R<Void> delete(Long questionId) {
+        return toR(questionService.delete(questionId));
+    }
+
 }
