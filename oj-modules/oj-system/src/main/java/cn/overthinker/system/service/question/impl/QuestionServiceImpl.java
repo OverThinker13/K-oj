@@ -6,7 +6,9 @@ import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.system.domain.question.Question;
 import cn.overthinker.system.domain.question.dto.QuestionAddDTO;
+import cn.overthinker.system.domain.question.dto.QuestionEditDTO;
 import cn.overthinker.system.domain.question.dto.QuestionQueryDTO;
+import cn.overthinker.system.domain.question.vo.QuestionDetailVO;
 import cn.overthinker.system.domain.question.vo.QuestionVO;
 import cn.overthinker.system.mapper.question.QuestionMapper;
 import cn.overthinker.system.service.question.QuestionService;
@@ -44,5 +46,33 @@ public class QuestionServiceImpl implements QuestionService {
         // 需要进行模型转换
         BeanUtils.copyProperties(questionAddDTO, question);
         return questionMapper.insert(question);
+    }
+
+    @Override
+    public QuestionDetailVO detail(Long questionId) {
+        Question question = questionMapper.selectById(questionId);
+        if (question == null) {
+            throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        }
+        QuestionDetailVO questionDetailVO = new QuestionDetailVO();
+        BeanUtils.copyProperties(question, questionDetailVO);
+        return questionDetailVO;
+    }
+
+    @Override
+    public int edit(QuestionEditDTO questionEditDTO) {
+        Question oldQuestion = questionMapper.selectById(questionEditDTO.getQuestionId());
+        if (oldQuestion == null) {
+            throw new ServiceException(ResultCode.FAILED_NOT_EXISTS);
+        }
+        oldQuestion.setTitle(questionEditDTO.getTitle());
+        oldQuestion.setDifficulty(questionEditDTO.getDifficulty());
+        oldQuestion.setTimeLimit(questionEditDTO.getTimeLimit());
+        oldQuestion.setSpaceLimit(questionEditDTO.getSpaceLimit());
+        oldQuestion.setContent(questionEditDTO.getContent());
+        oldQuestion.setQuestionCase(questionEditDTO.getQuestionCase());
+        oldQuestion.setDefaultCode(questionEditDTO.getDefaultCode());
+        oldQuestion.setMainFunc(questionEditDTO.getMainFunc());
+        return questionMapper.updateById(oldQuestion);
     }
 }

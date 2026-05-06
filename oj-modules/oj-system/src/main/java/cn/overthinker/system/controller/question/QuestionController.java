@@ -4,7 +4,9 @@ import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.domain.TableDataInfo;
 import cn.overthinker.system.domain.question.dto.QuestionAddDTO;
+import cn.overthinker.system.domain.question.dto.QuestionEditDTO;
 import cn.overthinker.system.domain.question.dto.QuestionQueryDTO;
+import cn.overthinker.system.domain.question.vo.QuestionDetailVO;
 import cn.overthinker.system.domain.question.vo.QuestionVO;
 import cn.overthinker.system.service.question.QuestionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,6 +33,16 @@ public class QuestionController extends BaseController {
     @PostMapping("/add")
     public R<Void> add(@RequestBody QuestionAddDTO questionAddDTO) {
         return toR(questionService.add(questionAddDTO));
+    }
+
+    @GetMapping("/detail")
+    public R<QuestionDetailVO> detail(Long questionId) {
+        return R.ok(questionService.detail(questionId));
+    }
+
+    @PutMapping("/edit")
+    public R<Void> edit(@RequestBody QuestionEditDTO questionEditDTO) {
+        return toR(questionService.edit(questionEditDTO));
     }
 
 }
