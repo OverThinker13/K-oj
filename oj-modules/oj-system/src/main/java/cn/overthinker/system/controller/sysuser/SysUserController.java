@@ -1,4 +1,4 @@
-package cn.overthinker.system.controller;
+package cn.overthinker.system.controller.sysuser;
 
 import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
