@@ -2,6 +2,7 @@ package cn.overthinker.system.service.exam.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.system.domain.exam.Exam;
@@ -51,7 +52,6 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
     @Override
     public String add(ExamAddDTO examAddDTO) {
         checkExamSaveParams(examAddDTO, null);
-
         Exam exam = new Exam();
         BeanUtil.copyProperties(examAddDTO, exam);
         examMapper.insert(exam);
@@ -62,6 +62,7 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
     @Override
     public boolean questionAdd(ExamQuestAddDTO examQuestAddDTO) {
         Exam exam = getExam(examQuestAddDTO.getExamId());
+        checkExam(exam);
         Set<Long> questionIdSet = examQuestAddDTO.getQuestionIdSet();
         if (CollectionUtil.isEmpty(questionIdSet)) {
             return true;
@@ -71,6 +72,15 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
             throw new ServiceException(ResultCode.EXAM_QUESTION_NOT_EXISTS);
         }
         return saveExamQuestion(exam, questionIdSet);
+    }
+
+    @Override
+    public int questionDelete(Long examId, Long questionId) {
+        Exam exam = getExam(examId);
+        checkExam(exam);
+        return examQuestionMapper.delete(new LambdaQueryWrapper<ExamQuestion>()
+                .eq(ExamQuestion::getExamId, examId)
+                .eq(ExamQuestion::getQuestionId, questionId));
     }
 
     @Override
@@ -101,12 +111,14 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
     @Override
     public int edit(ExamEditDTO examEditDTO) {
         Exam exam = getExam(examEditDTO.getExamId());
+        checkExam(exam);
         checkExamSaveParams(examEditDTO, examEditDTO.getExamId());
         exam.setTitle(examEditDTO.getTitle());
         exam.setStartTime(examEditDTO.getStartTime());
         exam.setEndTime(examEditDTO.getEndTime());
         return examMapper.updateById(exam);
     }
+
 
     private void checkExamSaveParams(ExamAddDTO examSaveDTO, Long examId) {
         // 竞赛标题是否重复进行判断，以及竞赛的合理时间范围
@@ -122,6 +134,12 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
         }
         if (examSaveDTO.getStartTime().isAfter(examSaveDTO.getEndTime())) {
             throw new ServiceException(ResultCode.EXAM_START_TIME_AFTER_END_TIME);
+        }
+    }
+
+    private void checkExam(Exam exam) {
+        if (exam.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new ServiceException(ResultCode.EXAM_STARTED);
         }
     }
 

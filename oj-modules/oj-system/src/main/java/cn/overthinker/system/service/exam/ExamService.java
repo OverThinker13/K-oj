@@ -17,7 +17,10 @@ public interface ExamService {
 
     boolean questionAdd(ExamQuestAddDTO examQuestAddDTO);
 
+    int questionDelete(Long examId, Long questionId);
+
     ExamDetailVO detail(Long examId);
 
     int edit(ExamEditDTO examEditDTO);
+
 }

@@ -43,6 +43,12 @@ public class ExamController extends BaseController {
         return toR(examService.questionAdd(examQuestAddDTO));
     }
 
+    //删除竞赛题目信息
+    @DeleteMapping("/question/delete")
+    public R<Void> questionDelete(Long examId, Long questionId) {
+        return toR(examService.questionDelete(examId, questionId));
+    }
+
     //获取竞赛详情
     @GetMapping("/detail")
     public R<ExamDetailVO> detail(Long examId) {
@@ -54,4 +60,6 @@ public class ExamController extends BaseController {
     public R<Void> edit(@Validated @RequestBody ExamEditDTO examEditDTO) {
         return toR(examService.edit(examEditDTO));
     }
+
+
 }

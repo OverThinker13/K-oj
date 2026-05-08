@@ -1,6 +1,8 @@
 package cn.overthinker.system.service.question.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.overthinker.common.core.constants.Constants;
 import cn.overthinker.common.core.domain.TableDataInfo;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.security.exception.ServiceException;
@@ -19,7 +21,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -29,6 +34,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<QuestionVO> list(QuestionQueryDTO questionQueryDTO) {
+        String excludeIdStr = questionQueryDTO.getExcludeIdStr();
+        if (StrUtil.isNotEmpty(excludeIdStr)) {
+            String[] excludeIdArr = excludeIdStr.split(Constants.SPLIT_SEN);
+            Set<Long> excludeIdSet = Arrays.stream(excludeIdArr)
+                    .map(Long::valueOf)
+                    .collect(Collectors.toSet());
+            questionQueryDTO.setExcludeIdSet(excludeIdSet);
+        }
         PageHelper.startPage(questionQueryDTO.getPageNum(), questionQueryDTO.getPageSize());
         // 用传统xml写sql
         return questionMapper.selectQuestionList(questionQueryDTO);
