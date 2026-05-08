@@ -7,6 +7,7 @@ import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.system.domain.exam.Exam;
 import cn.overthinker.system.domain.exam.ExamQuestion;
 import cn.overthinker.system.domain.exam.dto.ExamAddDTO;
+import cn.overthinker.system.domain.exam.dto.ExamEditDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQueryDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQuestAddDTO;
 import cn.overthinker.system.domain.exam.vo.ExamDetailVO;
@@ -25,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -50,24 +50,14 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
 
     @Override
     public String add(ExamAddDTO examAddDTO) {
-        List<Exam> examList = examMapper.selectList(new LambdaQueryWrapper<Exam>()
-                .eq(Exam::getTitle, examAddDTO.getTitle()));
-        if (CollectionUtil.isNotEmpty(examList)) {
-            throw new ServiceException(ResultCode.FAILED_EXAM_EXISTS);
-        }
-
-        if (examAddDTO.getStartTime().isBefore(LocalDateTime.now())) {
-            throw new ServiceException(ResultCode.EXAM_START_TIME_BEFORE_CURREN_TIME);
-        }
-        if (examAddDTO.getStartTime().isAfter(examAddDTO.getEndTime())) {
-            throw new ServiceException(ResultCode.EXAM_START_TIME_AFTER_END_TIME);
-        }
+        checkExamSaveParams(examAddDTO, null);
 
         Exam exam = new Exam();
         BeanUtil.copyProperties(examAddDTO, exam);
         examMapper.insert(exam);
         return exam.getExamId().toString();
     }
+
 
     @Override
     public boolean questionAdd(ExamQuestAddDTO examQuestAddDTO) {
@@ -106,6 +96,33 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
         List<QuestionVO> questionVOList = BeanUtil.copyToList(questionList, QuestionVO.class);
         examDetailVO.setExamQuestionList(questionVOList);
         return examDetailVO;
+    }
+
+    @Override
+    public int edit(ExamEditDTO examEditDTO) {
+        Exam exam = getExam(examEditDTO.getExamId());
+        checkExamSaveParams(examEditDTO, examEditDTO.getExamId());
+        exam.setTitle(examEditDTO.getTitle());
+        exam.setStartTime(examEditDTO.getStartTime());
+        exam.setEndTime(examEditDTO.getEndTime());
+        return examMapper.updateById(exam);
+    }
+
+    private void checkExamSaveParams(ExamAddDTO examSaveDTO, Long examId) {
+        // 竞赛标题是否重复进行判断，以及竞赛的合理时间范围
+        List<Exam> examList = examMapper.selectList(new LambdaQueryWrapper<Exam>()
+                .eq(Exam::getTitle, examSaveDTO.getTitle())
+                .ne(examId != null, Exam::getExamId, examId));
+        if (CollectionUtil.isNotEmpty(examList)) {
+            throw new ServiceException(ResultCode.FAILED_EXAM_EXISTS);
+        }
+
+        if (examSaveDTO.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new ServiceException(ResultCode.EXAM_START_TIME_BEFORE_CURREN_TIME);
+        }
+        if (examSaveDTO.getStartTime().isAfter(examSaveDTO.getEndTime())) {
+            throw new ServiceException(ResultCode.EXAM_START_TIME_AFTER_END_TIME);
+        }
     }
 
     private boolean saveExamQuestion(Exam exam, Set<Long> questionIdSet) {

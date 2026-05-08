@@ -1,6 +1,7 @@
 package cn.overthinker.system.service.exam;
 
 import cn.overthinker.system.domain.exam.dto.ExamAddDTO;
+import cn.overthinker.system.domain.exam.dto.ExamEditDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQueryDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQuestAddDTO;
 import cn.overthinker.system.domain.exam.vo.ExamDetailVO;
@@ -17,4 +18,6 @@ public interface ExamService {
     boolean questionAdd(ExamQuestAddDTO examQuestAddDTO);
 
     ExamDetailVO detail(Long examId);
+
+    int edit(ExamEditDTO examEditDTO);
 }

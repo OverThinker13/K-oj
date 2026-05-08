@@ -4,6 +4,7 @@ import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
 import cn.overthinker.common.core.domain.TableDataInfo;
 import cn.overthinker.system.domain.exam.dto.ExamAddDTO;
+import cn.overthinker.system.domain.exam.dto.ExamEditDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQueryDTO;
 import cn.overthinker.system.domain.exam.dto.ExamQuestAddDTO;
 import cn.overthinker.system.domain.exam.vo.ExamDetailVO;
@@ -46,5 +47,11 @@ public class ExamController extends BaseController {
     @GetMapping("/detail")
     public R<ExamDetailVO> detail(Long examId) {
         return R.ok(examService.detail(examId));
+    }
+
+    //编辑竞赛基本信息
+    @PutMapping("/edit")
+    public R<Void> edit(@Validated @RequestBody ExamEditDTO examEditDTO) {
+        return toR(examService.edit(examEditDTO));
     }
 }
