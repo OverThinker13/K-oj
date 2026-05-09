@@ -15,6 +15,8 @@ public interface ExamService {
 
     String add(ExamAddDTO examAddDTO);
 
+    int delete(Long examId);
+
     boolean questionAdd(ExamQuestAddDTO examQuestAddDTO);
 
     int questionDelete(Long examId, Long questionId);
@@ -23,4 +25,5 @@ public interface ExamService {
 
     int edit(ExamEditDTO examEditDTO);
 
+    int publish(Long examId);
 }

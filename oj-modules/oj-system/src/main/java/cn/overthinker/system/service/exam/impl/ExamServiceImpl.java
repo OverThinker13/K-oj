@@ -3,6 +3,7 @@ package cn.overthinker.system.service.exam.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.overthinker.common.core.constants.Constants;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.system.domain.exam.Exam;
@@ -56,6 +57,15 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
         BeanUtil.copyProperties(examAddDTO, exam);
         examMapper.insert(exam);
         return exam.getExamId().toString();
+    }
+
+    @Override
+    public int delete(Long examId) {
+        Exam exam = getExam(examId);
+        checkExam(exam);
+        examQuestionMapper.delete(new LambdaQueryWrapper<ExamQuestion>()
+                .eq(ExamQuestion::getExamId, examId));
+        return examMapper.deleteById(examId);
     }
 
 
@@ -116,6 +126,19 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
         exam.setTitle(examEditDTO.getTitle());
         exam.setStartTime(examEditDTO.getStartTime());
         exam.setEndTime(examEditDTO.getEndTime());
+        return examMapper.updateById(exam);
+    }
+
+    @Override
+    public int publish(Long examId) {
+        Exam exam = getExam(examId);
+        // select count(0) from tb_exam_question where exam_id =
+        Long count = examQuestionMapper.selectCount(new LambdaQueryWrapper<ExamQuestion>()
+                .eq(ExamQuestion::getExamId, examId));
+        if (count == null || count <= 0) {
+            throw new ServiceException(ResultCode.EXAM_NOT_HAS_QUESTION);
+        }
+        exam.setStatus(Constants.TRUE);
         return examMapper.updateById(exam);
     }
 

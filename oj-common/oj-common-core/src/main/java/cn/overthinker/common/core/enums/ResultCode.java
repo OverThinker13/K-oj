@@ -34,7 +34,9 @@ public enum ResultCode {
     EXAM_NOT_EXISTS(3203, "竞赛不存在"),
     EXAM_QUESTION_NOT_EXISTS(3204, "为竞赛新增的题目不存在"),
 
-    EXAM_STARTED(3205, "竞赛已经开始，无法进行编辑操作");
+    EXAM_STARTED(3205, "竞赛已经开始，无法进行操作"),
+
+    EXAM_NOT_HAS_QUESTION(3206, "竞赛当中不包含题目");
 
 
     private int code;
