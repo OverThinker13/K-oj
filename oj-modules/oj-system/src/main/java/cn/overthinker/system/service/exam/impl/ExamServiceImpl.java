@@ -142,6 +142,14 @@ public class ExamServiceImpl extends ServiceImpl<ExamQuestionMapper, ExamQuestio
         return examMapper.updateById(exam);
     }
 
+    @Override
+    public int cancelPublish(Long examId) {
+        Exam exam = getExam(examId);
+        checkExam(exam);
+        exam.setStatus(Constants.FALSE);
+        return examMapper.updateById(exam);
+    }
+
 
     private void checkExamSaveParams(ExamAddDTO examSaveDTO, Long examId) {
         // 竞赛标题是否重复进行判断，以及竞赛的合理时间范围

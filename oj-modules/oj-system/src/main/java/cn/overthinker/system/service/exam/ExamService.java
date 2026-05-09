@@ -26,4 +26,6 @@ public interface ExamService {
     int edit(ExamEditDTO examEditDTO);
 
     int publish(Long examId);
+
+    int cancelPublish(Long examId);
 }
