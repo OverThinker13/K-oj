@@ -1,5 +1,9 @@
-package cn.overthinker.system.domain.user.vo;
+package cn.overthinker.friend.domain.user;
 
+import cn.overthinker.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
@@ -7,17 +11,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserVO {
+@TableName("tb_user")
+public class User extends BaseEntity {
 
-    //加上注解转为String避免前端截断
     @JsonSerialize(using = ToStringSerializer.class)
+    @TableId(value = "USER_ID", type = IdType.ASSIGN_ID)
     private Long userId;
 
     private String nickName;
 
+    private String headImage;
+
     private Integer sex;
 
     private String phone;
+
+    private String code;
 
     private String email;
 

@@ -4,3 +4,20 @@ server:
 spring:
   application:
     name: oj-friend
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        namespace: 1f98d406-c28a-46bf-9e1a-c11338e1cf39
+        server-addr: localhost:8848
+        ip: 127.0.0.1
+      config:
+        namespace: 1f98d406-c28a-46bf-9e1a-c11338e1cf39
+        server-addr: localhost:8848
+        file-extension: yaml
+        # 核心：必须通过 extension-configs 引入短信公共配置
+        extension-configs:
+          - data-id: oj-common-message-local.yaml
+            group: DEFAULT_GROUP
+            refresh: true
