@@ -28,7 +28,9 @@ public enum ResultCode {
     FAILED_USER_PHONE(3105, "您输入的手机号有误"),
     FAILED_FREQUENT(3106, "操作频繁，请稍后重试"),
     FAILED_TIME_LIMIT(3107, "当天请求次数已达到上限"),
-    FILED_SEND_CODE(3108, "验证码发送错误"),
+    FAILED_SEND_CODE(3108, "验证码发送错误"),
+    FAILED_INVALID_CODE(3109, "验证码无效"),
+    FAILED_ERROR_CODE(3109, "验证码错误"),
 
 
     EXAM_START_TIME_BEFORE_CURREN_TIME(3201, "竞赛开始时间不能早于当前时间"),
