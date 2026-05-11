@@ -19,8 +19,8 @@ public class UserController extends BaseController {
     private UserService userService;
 
     //获取验证码
-//    @PostMapping("")
-//    public R<Void> sendCode(@RequestBody UserDTO userDTO) {
-//        userService.sendCode(userDTO).;
-//    }
+    @PostMapping("/sendCode")
+    public R<Void> sendCode(@RequestBody UserDTO userDTO) {
+        return toR(userService.sendCode(userDTO));
+    }
 }

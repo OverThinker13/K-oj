@@ -23,10 +23,12 @@ public enum ResultCode {
 
     AILED_USER_EXISTS(3101, "用户已存在"),
     FAILED_USER_NOT_EXISTS(3102, "用户不存在"),
-
     FAILED_LOGIN(3103, "账号或密码错误"),
     FAILED_USER_BANNED(3104, "您已被列⼊⿊名单, 请联系管理员."),
     FAILED_USER_PHONE(3105, "您输入的手机号有误"),
+    FAILED_FREQUENT(3106, "操作频繁，请稍后重试"),
+    FAILED_TIME_LIMIT(3107, "当天请求次数已达到上限"),
+    FILED_SEND_CODE(3108, "验证码发送错误"),
 
 
     EXAM_START_TIME_BEFORE_CURREN_TIME(3201, "竞赛开始时间不能早于当前时间"),
