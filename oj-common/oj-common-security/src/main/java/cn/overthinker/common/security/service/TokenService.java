@@ -23,28 +23,28 @@ public class TokenService {
     @Autowired
     private RedisService redisService;
 
-    public String createToken(Long userId, String secret, Integer identity, String nickName) {
+    public String createToken(Long userId, String secret, Integer identity, String nickName, String headImage) {
         Map<String, Object> claims = new HashMap<>();
         String userKey = UUID.fastUUID().toString();
         claims.put(JwtConstants.LOGIN_USER_ID, userId);
         claims.put(JwtConstants.LOGIN_USER_KEY, userKey);
         String token = JwtUtils.createToken(claims, secret);
-        // 身份认证具体需要存储那些敏感信息
+        //第三方机制中存储敏感的信息
 
-        // 第三方机制中存储敏感信息 redis 表面用户身份的字段 identity 1表示普通用户 2表示管理员用户 用对象存储
+        //身份认证具体还要存储那些信息   redis 表明用户身份字段  identity  1  表示普通用户  2 ： 表示管理员用户  对象
 
-        // 使用什么样的数据结构存储  key value  String
-        // key必须保证唯一且便于维护 - 统一前缀：logintoken:userId （userId通过雪花算法生成的唯一主键）
-        // 或者也可以用Hutool工具包的一个方法fastUUID
+        //使用什么样的数据结构  String  key value    String   hash  list  zset  set
+        //key 必须保证唯一     便于维护  统一前缀：logintoken:userId   userId是通过雪花算法生成的
+        //自增  管理员  C端用户   1
+        //过期时间我们怎么记录  过期时间应该定多长。     720分钟   2~3小时
 
-        // 过期时间怎么记录  过期时间应该定多长，由于还没有上线项目没有数据，我们先在这里设置相对比较安全的过期时间
-
-        String tokenKey = getTokenKey(userKey);  //使用的是userKey
+        String tokenKey = getTokenKey(userKey);
+//            String tokenKey = "logintoken:" + sysUser.getUserId();
         LoginUser loginUser = new LoginUser();
         loginUser.setIdentity(identity);
         loginUser.setNickName(nickName);
+        loginUser.setHeadImage(headImage);
         redisService.setCacheObject(tokenKey, loginUser, CacheConstants.EXP, TimeUnit.MINUTES);
-
         return token;
     }
 

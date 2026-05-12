@@ -1,14 +1,13 @@
 package cn.overthinker.friend.controller;
 
+import cn.overthinker.common.core.constants.HttpConstants;
 import cn.overthinker.common.core.controller.BaseController;
 import cn.overthinker.common.core.domain.R;
+import cn.overthinker.common.core.domain.vo.LoginUserVO;
 import cn.overthinker.friend.domain.user.dto.UserDTO;
 import cn.overthinker.friend.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -28,5 +27,16 @@ public class UserController extends BaseController {
     @PostMapping("/code/login")
     public R<String> codeLogin(@RequestBody UserDTO userDTO) {
         return R.ok(userService.codeLogin(userDTO.getPhone(), userDTO.getCode()));
+    }
+
+    //退出登录功能
+    @DeleteMapping("/logout")
+    public R<Void> logout(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
+        return toR(userService.logout(token));
+    }
+
+    @GetMapping("/info")
+    public R<LoginUserVO> info(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
+        return userService.info(token);
     }
 }

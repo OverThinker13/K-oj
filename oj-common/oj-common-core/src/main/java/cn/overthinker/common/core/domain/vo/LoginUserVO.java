@@ -1,8 +1,13 @@
 package cn.overthinker.common.core.domain.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LoginUserVO {
+
     private String nickName;
+
+    private String headImage;  //头像
 }

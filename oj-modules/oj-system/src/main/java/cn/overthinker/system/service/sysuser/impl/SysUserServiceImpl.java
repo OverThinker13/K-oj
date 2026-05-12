@@ -56,7 +56,7 @@ public class SysUserServiceImpl implements SysUserService {
         if (BCryptUtils.matchesPassword(password, sysUser.getPassword())) {
 //            loginResult.setCode(ResultCode.SUCCESS.getCode());
 //            loginResult.setMsg(ResultCode.SUCCESS.getMsg());
-            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue(), sysUser.getNickName());
+            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue(), sysUser.getNickName(), null);
             return R.ok(token);
         }
 //        loginResult.setCode(ResultCode.FAILED_LOGIN.getCode());

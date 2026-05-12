@@ -4,6 +4,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.overthinker.common.core.constants.CacheConstants;
 import cn.overthinker.common.core.constants.Constants;
+import cn.overthinker.common.core.constants.HttpConstants;
+import cn.overthinker.common.core.domain.LoginUser;
+import cn.overthinker.common.core.domain.R;
+import cn.overthinker.common.core.domain.vo.LoginUserVO;
 import cn.overthinker.common.core.enums.ResultCode;
 import cn.overthinker.common.core.enums.UserIdentity;
 import cn.overthinker.common.core.enums.UserStatus;
@@ -55,6 +59,9 @@ public class UserServiceimpl implements UserService {
 
     @Value("${jwt.secret}")
     private String secret;
+
+//    @Value("${file.oss.downloadUrl}")
+//    private String downloadUrl;
 
 
     //检验手机号格式是否合法
@@ -122,7 +129,35 @@ public class UserServiceimpl implements UserService {
         }
 
         //执行登录逻辑，生成token传给前端
-        return tokenService.createToken(user.getUserId(), secret, UserIdentity.ORDINARY.getValue(), user.getNickName());
+        return tokenService.createToken(user.getUserId(), secret, UserIdentity.ORDINARY.getValue(), user.getNickName(), user.getHeadImage());
+    }
+
+    @Override
+    public boolean logout(String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        return tokenService.deleteLoginUser(token, secret);
+    }
+
+    @Override
+    public R<LoginUserVO> info(String token) {
+        // 去除token中Bearer前缀
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) {
+            return R.fail();
+        }
+        LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setNickName(loginUser.getNickName());
+        loginUserVO.setHeadImage(loginUser.getHeadImage());
+//        if (StrUtil.isNotEmpty(loginUser.getHeadImage())) {
+//            loginUserVO.setHeadImage(downloadUrl + loginUser.getHeadImage());
+//        }
+        return R.ok(loginUserVO);
     }
 
     private void checkCode(String phone, String code) {
