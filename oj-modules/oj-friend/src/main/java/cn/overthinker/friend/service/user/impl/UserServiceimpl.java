@@ -1,6 +1,5 @@
 package cn.overthinker.friend.service.user.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.overthinker.common.core.constants.CacheConstants;
 import cn.overthinker.common.core.constants.Constants;
@@ -17,11 +16,10 @@ import cn.overthinker.common.security.exception.ServiceException;
 import cn.overthinker.common.security.service.TokenService;
 import cn.overthinker.friend.domain.user.User;
 import cn.overthinker.friend.domain.user.dto.UserDTO;
-import cn.overthinker.friend.mapper.UserMapper;
+import cn.overthinker.friend.mapper.user.UserMapper;
 import cn.overthinker.friend.service.user.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

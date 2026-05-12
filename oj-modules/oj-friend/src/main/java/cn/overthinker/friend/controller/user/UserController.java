@@ -1,4 +1,4 @@
-package cn.overthinker.friend.controller;
+package cn.overthinker.friend.controller.user;
 
 import cn.overthinker.common.core.constants.HttpConstants;
 import cn.overthinker.common.core.controller.BaseController;
@@ -35,6 +35,7 @@ public class UserController extends BaseController {
         return toR(userService.logout(token));
     }
 
+    //获取用户信息
     @GetMapping("/info")
     public R<LoginUserVO> info(@RequestHeader(HttpConstants.AUTHENTICATION) String token) {
         return userService.info(token);

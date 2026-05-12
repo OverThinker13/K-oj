@@ -1,4 +1,4 @@
-package cn.overthinker.friend.mapper;
+package cn.overthinker.friend.mapper.user;
 
 import cn.overthinker.friend.domain.user.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
