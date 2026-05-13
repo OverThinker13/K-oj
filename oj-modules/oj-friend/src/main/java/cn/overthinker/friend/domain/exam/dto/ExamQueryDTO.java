@@ -14,5 +14,5 @@ public class ExamQueryDTO extends PageQueryDTO {
 
     private String endTime;
 
-    private Integer type; //0 未完善  1 历史竞赛
+    private Integer type; //0 未开赛  1 历史竞赛
 }

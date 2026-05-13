@@ -10,7 +10,8 @@ import java.util.List;
 public interface ExamService {
     List<ExamVO> list(ExamQueryDTO examQueryDTO);
 
-//    TableDataInfo redisList(ExamQueryDTO examQueryDTO);
+
+    TableDataInfo redisList(ExamQueryDTO examQueryDTO);
 //
 //    TableDataInfo rankList(ExamRankDTO examRankDTO);
 //
