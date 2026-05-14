@@ -36,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionVO> list(QuestionQueryDTO questionQueryDTO) {
         String excludeIdStr = questionQueryDTO.getExcludeIdStr();
         if (StrUtil.isNotEmpty(excludeIdStr)) {
-            String[] excludeIdArr = excludeIdStr.split(Constants.SPLIT_SEN);
+            String[] excludeIdArr = excludeIdStr.split(Constants.SPLIT_SEM);
             Set<Long> excludeIdSet = Arrays.stream(excludeIdArr)
                     .map(Long::valueOf)
                     .collect(Collectors.toSet());
